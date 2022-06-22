@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { TodoList } from "./components/TodoList";
+import { TodoList, TodoListTaskType } from "./components/TodoList";
 import { v1 } from "uuid";
 
 export type FilterValueType = "All" | "Active" | "Completed";
@@ -9,6 +9,10 @@ type TodoListsType = {
     id: string;
     title: string;
     filter: FilterValueType;
+};
+
+type TasksType = {
+    [key: string]: Array<TodoListTaskType>;
 };
 
 function App() {
@@ -20,7 +24,7 @@ function App() {
         { id: todolistID2, title: "What to buy", filter: "All" },
     ]);
 
-    let [tasks, setTasks] = useState({
+    let [tasks, setTasks] = useState<TasksType>({
         [todolistID1]: [
             { id: v1(), title: "HTML&CSS", isDone: true },
             { id: v1(), title: "JS", isDone: true },
@@ -36,6 +40,12 @@ function App() {
             { id: v1(), title: "GraphQL2", isDone: false },
         ],
     });
+
+    const removeTodoList = (todoListID: string) => {
+        setTodolists(todolists.filter((td) => td.id !== todoListID));
+        delete tasks[todoListID];
+        setTasks({ ...tasks });
+    };
 
     const addTODO = (title: string, todoListID: string) => {
         const task = { id: v1(), title: title, isDone: false };
@@ -101,6 +111,7 @@ function App() {
                         filterTasks={filterTasks}
                         addTODO={addTODO}
                         changeTaskStatus={changeTaskStatus}
+                        removeTodoList={removeTodoList}
                     />
                 );
             })}

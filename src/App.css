@@ -27,3 +27,7 @@
 input {
     outline: none;
 }
+
+h3 {
+    display: inline-block;
+}

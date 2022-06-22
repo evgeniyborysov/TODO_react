@@ -24,6 +24,7 @@ type TodoListPropsType = {
         isDone: boolean,
         todolistsID: string
     ) => void;
+    removeTodoList: (todoListID: string) => void;
 };
 
 export const TodoList = (props: TodoListPropsType) => {
@@ -61,7 +62,14 @@ export const TodoList = (props: TodoListPropsType) => {
 
     return (
         <div>
-            <h3>{props.title}</h3>
+            <div>
+                <h3>{props.title}</h3>
+                <Button
+                    name={"✖"}
+                    callBack={() => props.removeTodoList(props.todoListID)}
+                />
+            </div>
+
             {/* <TodoListInputFull addTask={props.addTask} /> */}
             <Input
                 className={error ? "error" : ""}
