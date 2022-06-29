@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 import { FilterValueType } from "../App";
 import { Button } from "./Button";
-import { Input } from "./Input";
-// import { TodoListInputFull } from "./TodoListInputFull";
+import { EditableSpan } from "./EditableSpan";
+// import { Input } from "./Input";
+import { TodoListInputFull } from "./TodoListInputFull";
 
 export type TodoListTaskType = {
     id: string;
@@ -13,7 +14,6 @@ export type TodoListTaskType = {
 type TodoListPropsType = {
     todoListID: string;
     filter: FilterValueType;
-
     title: string;
     tasks: Array<TodoListTaskType>;
     removeTask: (taskID: string, todolistsID: string) => void;
@@ -25,12 +25,11 @@ type TodoListPropsType = {
         todolistsID: string
     ) => void;
     removeTodoList: (todoListID: string) => void;
+    editTaskTitle: (todolistsID: string, taskID: string, title: string) => void;
+    editTodoListTitle: (todolistsID: string, title: string) => void;
 };
 
 export const TodoList = (props: TodoListPropsType) => {
-    let [inputValue, setInputValue] = useState<string>("");
-    let [error, setError] = useState<string | null>(null);
-
     const onClickFilterButtonHandler = (
         filterValue: FilterValueType,
         todoListID: string
@@ -50,37 +49,48 @@ export const TodoList = (props: TodoListPropsType) => {
         props.changeTaskStatus(id, isDone, todolistsID);
     };
 
-    const addTODO = () => {
-        const task = inputValue.trim();
-        if (task !== "") {
-            props.addTODO(task, props.todoListID);
-            setInputValue("");
-        } else {
-            setError("Title is required!");
-        }
+    const editTaskTitle = (
+        todolistsID: string,
+        taskID: string,
+        title: string
+    ) => {
+        props.editTaskTitle(todolistsID, taskID, title);
+    };
+
+    const editTodoListTitle = (todolistsID: string, title: string) => {
+        props.editTodoListTitle(todolistsID, title);
     };
 
     return (
         <div>
             <div>
-                <h3>{props.title}</h3>
+                {/* <h3>{props.title}</h3> */}
+                <EditableSpan
+                    title={props.title}
+                    onChange={(title) => {
+                        editTodoListTitle(props.todoListID, title);
+                    }}
+                />
                 <Button
                     name={"✖"}
                     callBack={() => props.removeTodoList(props.todoListID)}
                 />
             </div>
 
-            {/* <TodoListInputFull addTask={props.addTask} /> */}
-            <Input
+            <TodoListInputFull
+                callBack={(task: string) =>
+                    props.addTODO(task, props.todoListID)
+                }
+            />
+            {/* <Input
                 className={error ? "error" : ""}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 addTODO={addTODO}
                 setError={setError}
                 todoListID={props.todoListID}
-            />
-            <Button name={"+"} callBack={addTODO} />
-            {error && <div className="error-message">{error}</div>}
+            /> */}
+            {/* <Button name={"+"} callBack={addTODO} /> */}
             <ul>
                 {props.tasks.map((task) => {
                     return (
@@ -99,9 +109,19 @@ export const TodoList = (props: TodoListPropsType) => {
                                         )
                                     }
                                 />
-                                <span className={task.isDone ? "isDone" : ""}>
-                                    {task.title}
-                                </span>
+                                {/* <span className={task.isDone ? "isDone" : ""}>
+                                    {task.title}****
+                                </span> */}
+                                <EditableSpan
+                                    title={task.title}
+                                    onChange={(title) => {
+                                        editTaskTitle(
+                                            props.todoListID,
+                                            task.id,
+                                            title
+                                        );
+                                    }}
+                                />
                             </label>
 
                             <Button
