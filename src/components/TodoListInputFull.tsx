@@ -1,3 +1,5 @@
+import { TextField } from "@mui/material";
+import Button from "@mui/material/Button/Button";
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 
 type TodoListInputPropsType = {
@@ -38,14 +40,36 @@ export const TodoListInputFull: React.FC<TodoListInputPropsType> = ({
 
     return (
         <div>
-            <input
+            {/* <input
                 className={error ? "error" : ""}
                 value={inputValue}
                 onChange={onChangeInputHandler}
                 onKeyPress={onKeyPressInputHandler}
+            /> */}
+            {/* <button onClick={onClickButtonHandler}>+</button> */}
+            <TextField
+                error={!!error}
+                id="outlined-basic"
+                label={!!error ? "Title is required!" : "Add task"}
+                variant="outlined"
+                size={"small"}
+                value={inputValue}
+                onChange={onChangeInputHandler}
+                onKeyPress={onKeyPressInputHandler}
             />
-            <button onClick={onClickButtonHandler}>+</button>
-            {error && <div className="error-message">{error}</div>}
+            <Button
+                style={{
+                    maxWidth: "40px",
+                    maxHeight: "40px",
+                    minWidth: "40px",
+                    minHeight: "40px",
+                }}
+                variant="contained"
+                color="secondary"
+                onClick={onClickButtonHandler}
+            >
+                +
+            </Button>
         </div>
     );
 };

@@ -3,6 +3,10 @@ import "./App.css";
 import { TodoList, TodoListTaskType } from "./components/TodoList";
 import { v1 } from "uuid";
 import { TodoListInputFull } from "./components/TodoListInputFull";
+import { ButtonAppBar } from "./components/ButtonAppBar";
+import { Container } from "@mui/system";
+import Grid from "@mui/material/Grid/Grid";
+import Paper from "@mui/material/Paper/Paper";
 
 export type FilterValueType = "All" | "Active" | "Completed";
 
@@ -119,35 +123,48 @@ function App() {
 
     return (
         <div className="App">
-            <TodoListInputFull callBack={addTodoList} />
-            {todolists.map((td) => {
-                let filteredTasks = tasks[td.id];
+            <ButtonAppBar />
+            <Container fixed>
+                <Grid container style={{ padding: "10px" }}>
+                    <TodoListInputFull callBack={addTodoList} />
+                </Grid>
+                <Grid container spacing={3}>
+                    {todolists.map((td) => {
+                        let filteredTasks = tasks[td.id];
 
-                if (td.filter === "Active") {
-                    filteredTasks = filteredTasks.filter(
-                        (task) => !task.isDone
-                    );
-                }
-                if (td.filter === "Completed") {
-                    filteredTasks = filteredTasks.filter((task) => task.isDone);
-                }
-                return (
-                    <TodoList
-                        key={td.id}
-                        todoListID={td.id}
-                        filter={td.filter}
-                        title={td.title}
-                        tasks={filteredTasks}
-                        removeTask={removeTask}
-                        filterTasks={filterTasks}
-                        addTODO={addTODO}
-                        changeTaskStatus={changeTaskStatus}
-                        removeTodoList={removeTodoList}
-                        editTaskTitle={editTaskTitle}
-                        editTodoListTitle={editTodoListTitle}
-                    />
-                );
-            })}
+                        if (td.filter === "Active") {
+                            filteredTasks = filteredTasks.filter(
+                                (task) => !task.isDone
+                            );
+                        }
+                        if (td.filter === "Completed") {
+                            filteredTasks = filteredTasks.filter(
+                                (task) => task.isDone
+                            );
+                        }
+                        return (
+                            <Grid item>
+                                <Paper style={{ padding: "10px" }}>
+                                    <TodoList
+                                        key={td.id}
+                                        todoListID={td.id}
+                                        filter={td.filter}
+                                        title={td.title}
+                                        tasks={filteredTasks}
+                                        removeTask={removeTask}
+                                        filterTasks={filterTasks}
+                                        addTODO={addTODO}
+                                        changeTaskStatus={changeTaskStatus}
+                                        removeTodoList={removeTodoList}
+                                        editTaskTitle={editTaskTitle}
+                                        editTodoListTitle={editTodoListTitle}
+                                    />
+                                </Paper>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </Container>
         </div>
     );
 }

@@ -1,12 +1,3 @@
-.App {
-    padding: 30px;
-    display: flex;
-}
-
-.App > div {
-    margin-right: 50px;
-}
-
 .isDone {
     text-decoration: line-through;
     opacity: 0.5;
@@ -30,4 +21,8 @@ input {
 
 h3 {
     display: inline-block;
+}
+
+ul {
+    list-style: none;
 }
