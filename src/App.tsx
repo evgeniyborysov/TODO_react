@@ -10,13 +10,13 @@ import Paper from "@mui/material/Paper/Paper";
 
 export type FilterValueType = "All" | "Active" | "Completed";
 
-type TodoListsType = {
+export type TodoListsType = {
     id: string;
     title: string;
     filter: FilterValueType;
 };
 
-type TasksType = {
+export type TasksType = {
     [key: string]: Array<TodoListTaskType>;
 };
 
@@ -104,7 +104,6 @@ function App() {
     }
 
     function editTaskTitle(todolistsID: string, taskID: string, title: string) {
-        console.log(tasks[todolistsID]);
         setTasks({
             ...tasks,
             [todolistsID]: tasks[todolistsID].map((task) =>

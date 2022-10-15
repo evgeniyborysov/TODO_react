@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useReducer } from "react";
 import "./App.css";
 import { TodoList, TodoListTaskType } from "./components/TodoList";
 import { v1 } from "uuid";
@@ -21,8 +21,6 @@ import {
 	RemoveTaskAC,
 	TasksReducer,
 } from "./state/tasks-reducer";
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "./state/store";
 
 export type FilterValueType = "All" | "Active" | "Completed";
 
@@ -37,37 +35,47 @@ export type TasksType = {
 };
 
 function AppWithReducers() {
-	const todolists = useSelector<AppRootStateType, Array<TodoListsType>>(
-		(state) => state.todolist
-	);
-	const tasks = useSelector<AppRootStateType, TasksType>(
-		(state) => state.tasks
-	);
-	const dispatch = useDispatch();
+	let todolistID1 = v1();
+	let todolistID2 = v1();
 
-	// function addTodoList(title: string) {
-	// 	const action = AddTodoListAC(title);
-	// 	dispatch(action);
-	// }
+	const initTasks = {
+		[todolistID1]: [
+			{ id: v1(), title: "HTML&CSS", isDone: true },
+			{ id: v1(), title: "JS", isDone: true },
+			{ id: v1(), title: "ReactJS", isDone: false },
+			{ id: v1(), title: "Rest API", isDone: false },
+			{ id: v1(), title: "GraphQL", isDone: false },
+		],
+		[todolistID2]: [
+			{ id: v1(), title: "Milk", isDone: true },
+			{ id: v1(), title: "Eggs", isDone: true },
+			{ id: v1(), title: "Meat", isDone: false },
+			{ id: v1(), title: "Pizza", isDone: false },
+			{ id: v1(), title: "Vine", isDone: false },
+		],
+	};
 
-	// const addTODO = (title: string, todoListID: string) => {
-	// 	const action = AddTaskAC(todoListID, title);
-	// 	dispatch(action);
-	// };
+	let [todolists, dispatchToTodolistsReducer] = useReducer(todoListsReducer, [
+		{ id: todolistID1, title: "What to learn", filter: "All" },
+		{ id: todolistID2, title: "What to buy", filter: "All" },
+	]);
+	let [tasks, dispatchToTasksReducer] = useReducer(TasksReducer, initTasks);
 
-	const addTodoList = useCallback((title: string) => {
+	function addTodoList(title: string) {
 		const action = AddTodoListAC(title);
-		dispatch(action);
-	}, []);
-
-	const addTODO = useCallback((title: string, todoListID: string) => {
-		const action = AddTaskAC(todoListID, title);
-		dispatch(action);
-	}, []);
+		dispatchToTodolistsReducer(action);
+		dispatchToTasksReducer(action);
+	}
 
 	const removeTodoList = (todoListID: string) => {
 		const action = RemoveTodoListAC(todoListID);
-		dispatch(action);
+		dispatchToTodolistsReducer(action);
+		dispatchToTasksReducer(action);
+	};
+
+	const addTODO = (title: string, todoListID: string) => {
+		const action = AddTaskAC(todoListID, title);
+		dispatchToTasksReducer(action);
 	};
 
 	const changeTaskStatus = (
@@ -76,27 +84,27 @@ function AppWithReducers() {
 		todolistsID: string
 	) => {
 		const action = ChangeTaskStatusAC(todolistsID, taskID, isDone);
-		dispatch(action);
+		dispatchToTasksReducer(action);
 	};
 
 	function filterTasks(filetValue: FilterValueType, todolistsID: string) {
 		const action = ChangeTodoListFilterAC(todolistsID, filetValue);
-		dispatch(action);
+		dispatchToTodolistsReducer(action);
 	}
 
 	function removeTask(taskID: string, todolistsID: string) {
 		const action = RemoveTaskAC(todolistsID, taskID);
-		dispatch(action);
+		dispatchToTasksReducer(action);
 	}
 
 	function editTaskTitle(todolistsID: string, taskID: string, title: string) {
 		const action = ChangeTaskTitleAC(todolistsID, taskID, title);
-		dispatch(action);
+		dispatchToTasksReducer(action);
 	}
 
 	function editTodoListTitle(todolistsID: string, title: string) {
 		const action = ChangeTodoListTitleAC(todolistsID, title);
-		dispatch(action);
+		dispatchToTodolistsReducer(action);
 	}
 
 	return (
@@ -121,10 +129,10 @@ function AppWithReducers() {
 							);
 						}
 						return (
-							<Grid key={td.id} item>
+							<Grid item>
 								<Paper style={{ padding: "10px" }}>
 									<TodoList
-										// key={td.id}
+										key={td.id}
 										todoListID={td.id}
 										filter={td.filter}
 										title={td.title}
