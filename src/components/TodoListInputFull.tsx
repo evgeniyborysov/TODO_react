@@ -11,7 +11,7 @@ export const TodoListInputFull: React.FC<TodoListInputPropsType> = React.memo(
 		let [inputValue, setInputValue] = useState("");
 		let [error, setError] = useState<string | null>(null);
 
-		console.log("Input");
+		console.log("Input called");
 
 		const addTitle = (inputValue: string) => {
 			const title = inputValue.trim();

@@ -1,7 +1,6 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useCallback } from "react";
 import "./App.css";
 import { TodoList, TodoListTaskType } from "./components/TodoList";
-import { v1 } from "uuid";
 import { TodoListInputFull } from "./components/TodoListInputFull";
 import { ButtonAppBar } from "./components/ButtonAppBar";
 import { Container } from "@mui/system";
@@ -9,7 +8,6 @@ import Grid from "@mui/material/Grid/Grid";
 import Paper from "@mui/material/Paper/Paper";
 import {
 	RemoveTodoListAC,
-	todoListsReducer,
 	AddTodoListAC,
 	ChangeTodoListFilterAC,
 	ChangeTodoListTitleAC,
@@ -19,7 +17,6 @@ import {
 	ChangeTaskStatusAC,
 	ChangeTaskTitleAC,
 	RemoveTaskAC,
-	TasksReducer,
 } from "./state/tasks-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
@@ -45,59 +42,69 @@ function AppWithReducers() {
 	);
 	const dispatch = useDispatch();
 
-	// function addTodoList(title: string) {
-	// 	const action = AddTodoListAC(title);
-	// 	dispatch(action);
-	// }
+	const addTodoList = useCallback(
+		(title: string) => {
+			const action = AddTodoListAC(title);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
-	// const addTODO = (title: string, todoListID: string) => {
-	// 	const action = AddTaskAC(todoListID, title);
-	// 	dispatch(action);
-	// };
+	const addTODO = useCallback(
+		(title: string, todoListID: string) => {
+			const action = AddTaskAC(todoListID, title);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
-	const addTodoList = useCallback((title: string) => {
-		const action = AddTodoListAC(title);
-		dispatch(action);
-	}, []);
+	const removeTodoList = useCallback(
+		(todoListID: string) => {
+			const action = RemoveTodoListAC(todoListID);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
-	const addTODO = useCallback((title: string, todoListID: string) => {
-		const action = AddTaskAC(todoListID, title);
-		dispatch(action);
-	}, []);
+	const changeTaskStatus = useCallback(
+		(taskID: string, isDone: boolean, todolistsID: string) => {
+			const action = ChangeTaskStatusAC(todolistsID, taskID, isDone);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
-	const removeTodoList = (todoListID: string) => {
-		const action = RemoveTodoListAC(todoListID);
-		dispatch(action);
-	};
+	const filterTasks = useCallback(
+		(filetValue: FilterValueType, todolistsID: string) => {
+			const action = ChangeTodoListFilterAC(todolistsID, filetValue);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
-	const changeTaskStatus = (
-		taskID: string,
-		isDone: boolean,
-		todolistsID: string
-	) => {
-		const action = ChangeTaskStatusAC(todolistsID, taskID, isDone);
-		dispatch(action);
-	};
+	const removeTask = useCallback(
+		(taskID: string, todolistsID: string) => {
+			const action = RemoveTaskAC(todolistsID, taskID);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
-	function filterTasks(filetValue: FilterValueType, todolistsID: string) {
-		const action = ChangeTodoListFilterAC(todolistsID, filetValue);
-		dispatch(action);
-	}
+	const editTaskTitle = useCallback(
+		(todolistsID: string, taskID: string, title: string) => {
+			const action = ChangeTaskTitleAC(todolistsID, taskID, title);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
-	function removeTask(taskID: string, todolistsID: string) {
-		const action = RemoveTaskAC(todolistsID, taskID);
-		dispatch(action);
-	}
-
-	function editTaskTitle(todolistsID: string, taskID: string, title: string) {
-		const action = ChangeTaskTitleAC(todolistsID, taskID, title);
-		dispatch(action);
-	}
-
-	function editTodoListTitle(todolistsID: string, title: string) {
-		const action = ChangeTodoListTitleAC(todolistsID, title);
-		dispatch(action);
-	}
+	const editTodoListTitle = useCallback(
+		(todolistsID: string, title: string) => {
+			const action = ChangeTodoListTitleAC(todolistsID, title);
+			dispatch(action);
+		},
+		[dispatch]
+	);
 
 	return (
 		<div className="App">
@@ -109,17 +116,6 @@ function AppWithReducers() {
 				<Grid container spacing={3}>
 					{todolists.map((td) => {
 						let filteredTasks = tasks[td.id];
-
-						if (td.filter === "Active") {
-							filteredTasks = filteredTasks.filter(
-								(task) => !task.isDone
-							);
-						}
-						if (td.filter === "Completed") {
-							filteredTasks = filteredTasks.filter(
-								(task) => task.isDone
-							);
-						}
 						return (
 							<Grid key={td.id} item>
 								<Paper style={{ padding: "10px" }}>
