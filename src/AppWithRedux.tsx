@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import "./App.css";
-import { TodoList, TodoListTaskType } from "./components/TodoList";
+import { TodoList } from "./components/TodoList";
 import { TodoListInputFull } from "./components/TodoListInputFull";
 import { ButtonAppBar } from "./components/ButtonAppBar";
 import { Container } from "@mui/system";
@@ -11,30 +11,22 @@ import {
 	AddTodoListAC,
 	ChangeTodoListFilterAC,
 	ChangeTodoListTitleAC,
+	FilterValueType,
+	TodolistDomainType,
 } from "./state/todoLists-reducer";
 import {
 	AddTaskAC,
 	ChangeTaskStatusAC,
 	ChangeTaskTitleAC,
 	RemoveTaskAC,
+	TasksType,
 } from "./state/tasks-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
-
-export type FilterValueType = "All" | "Active" | "Completed";
-
-export type TodoListsType = {
-	id: string;
-	title: string;
-	filter: FilterValueType;
-};
-
-export type TasksType = {
-	[key: string]: Array<TodoListTaskType>;
-};
+import { TaskStatuses } from "./API/todolist-api";
 
 function AppWithReducers() {
-	const todolists = useSelector<AppRootStateType, Array<TodoListsType>>(
+	const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(
 		(state) => state.todolist
 	);
 	const tasks = useSelector<AppRootStateType, TasksType>(
@@ -67,8 +59,8 @@ function AppWithReducers() {
 	);
 
 	const changeTaskStatus = useCallback(
-		(taskID: string, isDone: boolean, todolistsID: string) => {
-			const action = ChangeTaskStatusAC(todolistsID, taskID, isDone);
+		(taskID: string, status: TaskStatuses, todolistsID: string) => {
+			const action = ChangeTaskStatusAC(todolistsID, taskID, status);
 			dispatch(action);
 		},
 		[dispatch]
@@ -111,7 +103,7 @@ function AppWithReducers() {
 			<ButtonAppBar />
 			<Container fixed>
 				<Grid container style={{ padding: "10px" }}>
-					<TodoListInputFull callBack={addTodoList} />
+					<TodoListInputFull callBack={addTodoList} name={"Add"} />
 				</Grid>
 				<Grid container spacing={3}>
 					{todolists.map((td) => {

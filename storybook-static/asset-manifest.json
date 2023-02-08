@@ -1,0 +1,43 @@
+{
+  "files": {
+    "0.3ee60dfe.iframe.bundle.js": "./0.3ee60dfe.iframe.bundle.js",
+    "0.3ee60dfe.iframe.bundle.js.map": "./0.3ee60dfe.iframe.bundle.js.map",
+    "1.97dbcdf5.iframe.bundle.js": "./1.97dbcdf5.iframe.bundle.js",
+    "2.439fafb1.iframe.bundle.js": "./2.439fafb1.iframe.bundle.js",
+    "main.css": "./static/css/main.b5a6b180.chunk.css",
+    "main.js": "./main.ba7ecb5e.iframe.bundle.js",
+    "main.css.map": "./static/css/main.b5a6b180.chunk.css.map",
+    "main.js.map": "./main.ba7ecb5e.iframe.bundle.js.map",
+    "runtime~main.js": "./runtime~main.cd5d2a22.iframe.bundle.js",
+    "vendors~main.js": "./vendors~main.f67d02b2.iframe.bundle.js",
+    "vendors~main.js.map": "./vendors~main.f67d02b2.iframe.bundle.js.map",
+    "6.f18b3e95.iframe.bundle.js": "./6.f18b3e95.iframe.bundle.js",
+    "6.f18b3e95.iframe.bundle.js.map": "./6.f18b3e95.iframe.bundle.js.map",
+    "7.82c81f44.iframe.bundle.js": "./7.82c81f44.iframe.bundle.js",
+    "8.10634b2a.iframe.bundle.js": "./8.10634b2a.iframe.bundle.js",
+    "9.f707eee6.iframe.bundle.js": "./9.f707eee6.iframe.bundle.js",
+    "9.f707eee6.iframe.bundle.js.map": "./9.f707eee6.iframe.bundle.js.map",
+    "0.3ee60dfe.iframe.bundle.js.LICENSE.txt": "./0.3ee60dfe.iframe.bundle.js.LICENSE.txt",
+    "6.f18b3e95.iframe.bundle.js.LICENSE.txt": "./6.f18b3e95.iframe.bundle.js.LICENSE.txt",
+    "9.f707eee6.iframe.bundle.js.LICENSE.txt": "./9.f707eee6.iframe.bundle.js.LICENSE.txt",
+    "iframe.html": "./iframe.html",
+    "main.ba7ecb5e.iframe.bundle.js.LICENSE.txt": "./main.ba7ecb5e.iframe.bundle.js.LICENSE.txt",
+    "precache-manifest.59b603b5eb12c69b2771df42073a2ea3.js": "./precache-manifest.59b603b5eb12c69b2771df42073a2ea3.js",
+    "service-worker.js": "./service-worker.js",
+    "static/media/code-brackets.svg": "./static/media/code-brackets.d43eb968.svg",
+    "static/media/colors.svg": "./static/media/colors.8104e6f5.svg",
+    "static/media/comments.svg": "./static/media/comments.3f9a1398.svg",
+    "static/media/direction.svg": "./static/media/direction.d3dc567b.svg",
+    "static/media/flow.svg": "./static/media/flow.e3812c4f.svg",
+    "static/media/plugin.svg": "./static/media/plugin.5ba97e9b.svg",
+    "static/media/repo.svg": "./static/media/repo.3452b916.svg",
+    "static/media/stackalt.svg": "./static/media/stackalt.66f4b748.svg",
+    "vendors~main.f67d02b2.iframe.bundle.js.LICENSE.txt": "./vendors~main.f67d02b2.iframe.bundle.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "runtime~main.cd5d2a22.iframe.bundle.js",
+    "vendors~main.f67d02b2.iframe.bundle.js",
+    "static/css/main.b5a6b180.chunk.css",
+    "main.ba7ecb5e.iframe.bundle.js"
+  ]
+}

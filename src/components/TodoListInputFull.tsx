@@ -3,11 +3,12 @@ import Button from "@mui/material/Button/Button";
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 
 type TodoListInputPropsType = {
+	name?: string;
 	callBack: (inputValue: string) => void;
 };
 
 export const TodoListInputFull: React.FC<TodoListInputPropsType> = React.memo(
-	({ callBack }) => {
+	({ callBack, name }) => {
 		let [inputValue, setInputValue] = useState("");
 		let [error, setError] = useState<string | null>(null);
 
@@ -56,7 +57,7 @@ export const TodoListInputFull: React.FC<TodoListInputPropsType> = React.memo(
 				<TextField
 					error={!!error}
 					id="outlined-basic"
-					label={!!error ? "Title is required!" : "Add task"}
+					label={!!error ? "Title is required!" : name}
 					variant="outlined"
 					size={"small"}
 					value={inputValue}
